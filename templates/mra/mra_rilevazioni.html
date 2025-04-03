@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rilevazioni per Sessione [{{ id_sessione }}] in tipologia [TIPOLOGIA-{{ id_tipologia }}]</title>
+    <link rel="stylesheet" href="/static/css/dec.css">
+</head>
+<body>
+    <h1 class="styled-title"">Rilevazioni in Sessione</h1>
+
+    <table class="status-table">
+        <thead>
+            <tr>
+                <th>Atleta</th>
+                <th>Tipologia</th>
+                <th>Sessione</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ atleta.nickname }} / [{{id_atleta}}]</td>
+                <td>TIPOLOGIA-{{ id_tipologia }} / [{{ id_tipologia }}]</td>
+                <td>[{{ id_sessione_encoded }}]</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+
+    {% if not rilevazioni["error"] %}
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID Rilevazione</th>
+                    <th>Esito Tentativo</th>
+                    <th>Pulsante Proposto</th>
+                    <th>Pulsante Premuto</th>
+                    <th>Tempo di Risposta (ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rilevazione in rilevazioni %}
+                    <tr>                  
+                        <td>Rilevaz. N.{{ ("{:03}".format(loop.index0)) }}</td>
+                        <td>
+                            {% if rilevazione.pulsante_proposto == rilevazione.pulsante_premuto and rilevazione.pulsante_proposto != None %}
+                                ✅ CORRETTO
+                            {% else %}
+                                ❌ ERRORE
+                            {% endif %}
+                        </td>
+                        <td>[{{ "P" + (rilevazione.pulsante_proposto | string) if rilevazione.pulsante_proposto != None and rilevazione.pulsante_proposto != 0 else "NA"}}]</td>
+                        <td>[{{ "P" + (rilevazione.pulsante_premuto | string) if rilevazione.pulsante_premuto != None and rilevazione.pulsante_premuto != 0 else "⚠️ TEMPO SCADUTO " }}]</td>
+                        <td>{{ (rilevazione.tempo_risposta_ms | string) if rilevazione.tempo_risposta_ms != None and rilevazione.tempo_risposta_ms != 0 else "[NA]" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p align="center">Nessuna rilevazione disponibile per la sessione scelta.</p>
+    {% endif %}
+
+    <p></p>
+
+    <table class="navigation-table">
+        <tr>
+            <td><a href="/mra-web/atleti/{{ id_atleta }}/tipologie-esercizi-svolti/{{ id_tipologia }}/sessioni">⏎ Torna alla lista delle sessioni in Tipologia [TIPOLOGIA-{{ id_tipologia }}/{{ id_tipologia }}] per Atleta [{{ atleta.nickname }}/{{ id_atleta }}]</a></td>
+        </tr>
+        <tr>
+          <td><a href="/mra-web/atleti/{{ id_atleta }}/tipologie-esercizi-svolti">⏎ Torna alla lista tipologie per Atleta [{{ atleta.nickname }}/{{ id_atleta }}]</a></td>
+        </tr>
+        <tr>
+            <td><a href="/mra-web/atleti">⏎ Torna alla lista degli atleti</a></td>
+        </tr>
+    </table>
+
+</body>
+</html>

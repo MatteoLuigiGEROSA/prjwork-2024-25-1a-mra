@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table Example</title>
+  <link rel="stylesheet" href="/static/css/dec.css">
+</head>
+<body>
+  <label for="userid" class="id">
+    <span id="box">
+    ID
+  </span>
+    <input type="text" class="inp">
+  </label>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th> Nome </th>
+        <th> ID </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for atleta in atleti %}
+      <tr>
+        <td> {{ atleta.nome }} </td>
+        <td><a href="/esercizi_atleta/{{loop.index0}}"><button> {{ atleta.id }} </button></a></td>
+      </tr>
+      {% endfor %}   
+      
+    </tbody>
+  </table>
+</body>
+</html>

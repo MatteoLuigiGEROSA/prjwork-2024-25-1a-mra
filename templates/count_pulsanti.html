@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numero Pulsanti Esercizio</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 50%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f4f4f4; }
+        #error-message { color: red; text-align: center; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Numero di Pulsanti per Tipologia Esercizio</h2>
+
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Tipologia Esercizio</th>
+                <th>Numero Pulsanti</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="id_tipologia">Caricamento...</td>
+                <td id="tot_pulsanti">Caricamento...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p id="error-message"></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Recupera l'ID della tipologia di esercizio dall'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const id_tipologia = urlParams.get("id") || "111"; // Valore di default se non specificato
+            
+            // Aggiorna il nome della tipologia
+            document.getElementById("id_tipologia").textContent = id_tipologia;
+
+            // Costruisce l'URL dell'API
+            const apiUrl = `http://127.0.0.1:5000/api/catalogo_esercizi/${id_tipologia}/count_pulsanti`;
+
+            // Effettua la richiesta API con fetch
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Errore nel recupero dei dati: " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("error-message").textContent = data.error;
+                        document.getElementById("tot_pulsanti").textContent = "N/D";
+                    } else {
+                        document.getElementById("tot_pulsanti").textContent = data.totPulsanti;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("error-message").textContent = "Errore: " + error.message;
+                    document.getElementById("tot_pulsanti").textContent = "Errore";
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+.dropbtn {
+    animation-name: slideRight;
+    animation-duration: 2s;
+    margin-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffa41c;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+@keyframes slideRight{
+    from{transform: translateX(-100px)}
+  }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    animation-name: slideDown;
+    animation-duration: 1s ;
+    font-family: Arial, Helvetica, sans-serif;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+@keyframes slideDown{
+    from{transform: translateY(-20px)}
+  }
+.dropdown:hover .dropdown-content {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+/* css by nfl abd
+   html by nfl abd
+   js by maxim hlushko
+   python by daniel la ganga

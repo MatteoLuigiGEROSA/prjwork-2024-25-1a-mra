@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .styled-table {
+    width: 80%;
+    margin: 50px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation-name: slideUp;
+    animation-duration: 2s ;
+  }
+  @keyframes slideUp{
+    from{transform: translateY(-100px)}
+  }
+  
+  .styled-table th, .styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+  
+  .styled-table thead {
+    background-color: #ff7285;
+    color: white;
+  }
+  
+  .styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .styled-table tbody tr:hover {
+    background-color: #ddd;
+  }
+.b2{
+    background-color: hsl(84, 100%, 59%);
+    border-radius: 20px;
+    border: none;
+    padding: 10px;
+}
+.b3{
+    background-color: rgb(255, 241, 47);
+    border-radius: 20px;
+    border: none;
+    padding: 10px;
+}
+.b4{
+    background-color: rgb(255, 141, 47);
+    border-radius: 20px;
+    border: none;
+    padding: 10px;
+}
+.b5{
+    background-color: rgb(255, 87, 87);
+    border-radius: 20px;
+    border: none;
+    padding: 10px;
+}
+.b1{
+    background-color: rgb(47, 206, 255);
+    border-radius: 20px;
+    border: none;
+    padding: 10px;
+}
+.b1:hover{
+    background-color: rgb(175, 236, 255);
+    cursor: pointer;
+}
+.b2:hover{
+    background-color: rgb(191, 255, 165);
+    cursor: pointer;
+}
+.b3:hover{
+    background-color: rgb(252, 255, 215);
+    cursor: pointer;
+}
+.b4:hover{
+    background-color: rgb(255, 206, 132);
+    cursor: pointer;
+}
+.b5:hover{
+    background-color: rgb(255, 218, 218);
+    cursor: pointer;
+}
+        
+

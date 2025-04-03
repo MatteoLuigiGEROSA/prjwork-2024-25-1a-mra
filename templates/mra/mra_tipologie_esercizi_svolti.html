@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipologie Esercizi Svolti per Atleta</title>
+    <link rel="stylesheet" href="/static/css/dec.css">
+</head>
+<body>
+    <h1 class="styled-title">Tipologie di Esercizi Svolti</h1>
+
+    <table class="status-table">
+        <thead>
+            <tr>
+                <th>Atleta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ atleta.nickname }} / [{{id_atleta}}]</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+
+    <!--  DEBUG:
+    <pre>
+        Tipo: {{ tipologie.__class__.__name__ }}
+        Lunghezza: {{ tipologie | length }}
+        Contenuto: {{ tipologie }}
+        ERRORE: {{not tipologie["error"]}}
+    </pre> -->
+
+    {% if not tipologie["error"] %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Nome Tipologia</th>
+                <th>Quantità Sessioni</th>
+                <th>Prima Sessione</th>
+                <th>Ultima Sessione</th>
+                <th>ID Tipologia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipologia in tipologie %}
+            <tr>
+                <td>TIPOLOGIA-{{ tipologia.id }}</td>
+                <td>{{ tipologia.numero_sessioni }}</td>
+                <td>{{ tipologia.intervallo_date_sessioni.prima_sessione }}</td>
+                <td>{{ tipologia.intervallo_date_sessioni.ultima_sessione }}</td>
+                <td>
+                    <form action="{{ url_for('pg_sessioni', id_atleta=id_atleta, id_tipologia=tipologia.id) }}" method="GET">
+                        <input type="hidden" name="id_atleta" value="{{ id_atleta }}">
+                        <input type="hidden" name="id_tipologia" value="{{ tipologia.id }}">
+                        <button type="submit">{{ tipologia.id }}</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p align="center">Nessuna tipologia di esercizio svolto disponibile per questo atleta.</p>
+    {% endif %}
+
+    <p></p>
+
+    <table class="navigation-table">
+        <tr>
+            <td><a href="/mra-web/atleti">⏎ Torna alla lista degli atleti</a></td>
+        </tr>
+    </table>
+
+</body>
+</html>

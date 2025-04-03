@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="enterDetails">
+        <h1>Enter details</h1>
+        <h4>ID</h4> 
+        <input id="enterID" type="text"> 
+        <h4>Name</h4> 
+        <input id="enterName" type="text"> 
+        <h4>Age</h4> 
+        <input id="enterAge" type="text"> <br><br>
+        <h4>Sesso</h4> 
+        <input id="enterSesso" type="text"> <br><br>
+        <h4>IDEsercizio</h4> 
+        <input id="enterIDEsercizio" type="text"> <br><br>
+        <h4>Date of Exercise</h4>
+        <input id="enterExerciseDate" type="date"> <br><br>
+        <h4>Tempo Pulsante</h4>
+        <input id="enterTempoPulsante" type="number"> <br><br>
+        <button id="insert">INSERT</button>    
+    </div>
+    
+    <div id="findDetails">
+        <h1>Find by ID</h1>
+        <h4>ID</h4>
+        <input id="findID" type="text"> <br><br>
+        <button id="find">FIND</button>
+        <h3 id="findName"></h3>
+        <h3 id="findAge"></h3>
+        <h3 id="findSesso"></h3>
+        <h3 id="findExerciseDate"></h3>
+        <h3 id="findTempoPulsante"></h3> <br><br>
+    </div>    
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+      import { getDatabase, ref, set, get, child, update } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js"; 
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "{{cfg[env].MAIN_DATABASE_API_KEY}}",
+        authDomain: "{{cfg[env].MAIN_DATABASE_AUTH_DOMAIN}}",
+        databaseURL: "{{cfg[env].MAIN_DATABASE_URL}}",
+        projectId: "{{cfg[env].MAIN_DATABASE_PROJECT_ID}}",
+        storageBucket: "{{cfg[env].MAIN_DATABASE_STORAGE_BUCKET}}",
+        messagingSenderId: "{{cfg[env].MAIN_DATABASE_MESSAGING_SENDER_ID}}",
+        appId: "{{cfg[env].MAIN_DATABASE_APP_ID}}"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      // Get a reference to the database
+      const db = getDatabase(app);
+
+      var enterID = document.querySelector("#enterID");
+      var enterName = document.querySelector("#enterName");
+      var enterAge = document.querySelector("#enterAge");
+      var enterSesso = document.querySelector("#enterSesso");
+      var enterIDEsercizio = document.querySelector("#enterIDEsercizio");
+      var enterExerciseDate = document.querySelector("#enterExerciseDate");
+      var enterTempoPulsante = document.querySelector("#enterTempoPulsante");
+      
+      var findID = document.querySelector("#findID");
+      var findName = document.querySelector("#findName");
+      var findAge = document.querySelector("#findAge");
+      var findSesso = document.querySelector("#findSesso");
+      var findExerciseDate = document.querySelector("#findExerciseDate");
+      var findTempoPulsante = document.querySelector("#findTempoPulsante");
+
+      var insertBtn = document.querySelector("#insert");
+      var findBtn = document.querySelector("#find");
+
+      // Function to insert data
+      function InsertData() {
+          const userID = enterID.value;
+          const exerciseDateTimestamp = new Date(enterExerciseDate.value).getTime();  // Convert the date to timestamp
+          const idEsercizio = enterIDEsercizio.value;  // Get the provided exercise ID
+
+          // Create a reference to the user's data
+          const userRef = ref(db, "utenti/" + userID);
+
+          // Prepare the data to be added/updated
+          const userData = {
+              data: enterAge.value,
+              nickname: enterName.value,
+              sesso: enterSesso.value
+          };
+
+          // Prepare the exercise data with the correct structure
+          const exerciseData = {
+              [idEsercizio]: {
+                  [exerciseDateTimestamp]: {
+                      tempoPulsante: enterTempoPulsante.value
+                  }
+              }
+          };
+
+          // Update user data and add exercise data
+          update(userRef, {
+              ...userData,
+              esercizi: exerciseData
+          })
+          .then(() => {
+              alert("Data added successfully");
+          })
+          .catch((error) => {
+              alert("Error: " + error);
+          });
+      }
+
+      // Function to find data
+      function FindData() {
+          get(child(ref(db), "utenti/" + findID.value))
+          .then((snapshot) => {
+              if (snapshot.exists()) {
+                  const data = snapshot.val();
+                  findName.innerHTML = "Name: " + data.nickname;
+                  findAge.innerHTML = "Age: " + data.data;
+                  findSesso.innerHTML = "Sesso: " + data.sesso;
+
+                  // Display exercise data if exists
+                  const exercises = data.esercizi;
+                  const exerciseIds = Object.keys(exercises);
+                  if (exerciseIds.length > 0) {
+                      const exerciseId = exerciseIds[0];
+                      const exerciseData = exercises[exerciseId];
+                      const timestamps = Object.keys(exerciseData);
+                      if (timestamps.length > 0) {
+                          const timestamp = timestamps[0];
+                          const exerciseDetails = exerciseData[timestamp];
+                          findExerciseDate.innerHTML = "Exercise Date (Timestamp): " + timestamp;
+                          findTempoPulsante.innerHTML = "Tempo Pulsante: " + exerciseDetails.tempoPulsante;
+                      }
+                  }
+              } else {
+                  alert("No data found");
+              }
+          })
+          .catch((error) => {
+              alert("Error: " + error);
+          });
+      }
+
+      insertBtn.addEventListener('click', InsertData);
+      findBtn.addEventListener('click', FindData);
+    </script>
+</body>
+</html>

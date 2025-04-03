@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Exercice </title>
+    <link rel="stylesheet" href="/static/css/dec.css">
+</head>
+<body>
+    <table class="styled-table">
+        <thead>
+          <tr>
+            <th> Esercizio </th>
+            <th> ID dell'esercizio </th>
+            <th> Difficoltà </th>
+            <th> Esito in Cent. </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for esercizio in atleta.esercizi %}
+          <tr>
+            <td> {{ esercizio.descrizione }} </td>
+            <td><a href="indox.html"><button> {{ esercizio.id }} </button></a></td>
+            <td> {{ esercizio.difficolta }} </td>
+            <td> {{ esercizio.esito }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</body>
+</html>

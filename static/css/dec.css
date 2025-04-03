@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+
+  .styled-title {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10%;
+    color: #030303;
+  }
+
+  .styled-table {
+    width: 80%;
+    margin: 50px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation-name: slideUp;
+    animation-duration: 1s ;
+  }
+  @keyframes slideUp{
+    from{transform: translateY(-100px)}
+  }
+
+  .styled-table th, .styled-table td {
+    padding: 12px 15px;
+    text-align: center;
+  }
+
+  .styled-table thead {
+    background-color: #ff7285;
+    color: white;
+  }
+
+  .styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .styled-table tbody tr:hover {
+    background-color: #cdcdcd;
+  }
+button{
+  border-radius: 17%;
+  border-color: azure;
+  background-color: aquamarine;
+  font-family: Arial, Helvetica, sans-serif;
+}
+button:hover{
+  background-color: #ff7285;
+}
+.inp{
+  border-radius: 10px;
+  border-color: aquamarine;
+  margin-top: 10%;
+
+}
+.id{
+  margin-left: 35%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff3f4;
+}
+#box{
+  background-color: rgb(255, 105, 148);
+  border-radius: 20%;
+}
+
+.status-table {
+  width: 35%;
+  margin: 5px auto;
+  left: 100px;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation-name: slideUp;
+  animation-duration: 1s ;
+}
+@keyframes slideUp{
+  from{transform: translateY(-100px)}
+}
+
+.status-table th, .status-table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.status-table thead {
+  background-color: #ff7285;
+  color: white;
+}
+
+.status-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.status-table tbody tr:hover {
+  background-color: #cdcdcd;
+}
+
+.navigation-table {
+  width: 75%;
+  position: relative;
+  left: 40px;
+  margin: 50px auto;
+}
+
+.navigation-table th, .navigation-table td {
+  text-align: left;
+}
+

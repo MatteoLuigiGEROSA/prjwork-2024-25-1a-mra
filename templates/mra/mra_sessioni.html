@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessioni svolte in Tipologia Esercizi Svolti [TIPOLOGIA-{{ id_tipologia }}]</title>
+    <link rel="stylesheet" href="/static/css/dec.css">
+</head>
+<body>
+    <h1 class="styled-title">Sessioni di Tipologia svolte</h1>
+
+    <table class="status-table">
+        <thead>
+            <tr>
+                <th>Atleta</th>
+                <th>Tipologia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ atleta.nickname }} / [{{id_atleta}}]</td>
+                <td>TIPOLOGIA-{{ id_tipologia }} / [{{ id_tipologia }}]</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+
+    {% if not sessioni["error"] %}
+        <table  class="styled-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Conteggio Rilevazioni</th>
+                    <th>Durata Massima (s)</th>
+                    <th>Dettaglio Rilevazioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sessione in sessioni %}
+                    <tr>
+                        <td>{{ sessione.id }}</td>
+                        <td>{{ sessione.numero_rilevazioni }}</td>
+                        <td>{{ ((5 * sessione.numero_rilevazioni) - 2) }}</td>
+                        <td>
+                            <a href="{{ url_for('pg_rilevazioni', id_atleta=id_atleta, id_tipologia=tipologia.id, id_sessione_encoded=sessione.id) }}">
+                                Rilevaz. in Sessione #{{ ("{:02}".format(loop.index)) }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p align="center">Nessuna sessione trovata per questa tipologia di esercizio svolto.</p>
+    {% endif %}
+
+    <p></p>
+
+    <table class="navigation-table">
+        <tr>
+          <td><a href="/mra-web/atleti/{{ id_atleta }}/tipologie-esercizi-svolti">⏎ Torna alla lista tipologie per Atleta [{{ atleta.nickname }}/{{ id_atleta }}]</a></td>
+        </tr>
+        <tr>
+            <td><a href="/mra-web/atleti">⏎ Torna alla lista degli atleti</a></td>
+        </tr>
+    </table>
+
+</body>
+</html>

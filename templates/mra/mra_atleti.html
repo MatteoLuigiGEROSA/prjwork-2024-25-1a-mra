@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista Atleti</title>
+  <link rel="stylesheet" href="/static/css/dec.css">
+</head>
+<body>
+  <h1 class="styled-title">Lista Atleti</h1>
+
+  {% if not atleti["error"] %}
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Id Atleta</th>
+          <th>Nome</th>
+          <th>Genere</th>
+          <th>Data di Nascita</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for atleta in atleti %}
+          <tr>
+            <td>{{ atleta.id }}</td>
+            <td>{{ atleta.nickname }}</td>
+            <td>{{ atleta.genere }}</td>
+            <td>{{ atleta["data-inserimento"] }}</td>
+            <td>
+              <a href="{{ url_for('pg_tipologie_esercizi_svolti', id_atleta=atleta.id) }}">
+                Vedi esercizi svolti
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p align="center">Nessun atleta attualmente disponibile nella Base di Dati.</p>
+  {% endif %}
+</body>
+</html>
